@@ -1,0 +1,39 @@
+{% set name = "distro" %}
+{% set version = "1.5.0" %}
+{% set sha256 = "0e58756ae38fbd8fc3020d54badb8eae17c5b9dcbed388b17bb55b8a5928df92" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - distro = distro:main
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+
+test:
+  commands:
+    - distro --help
+  imports:
+    - distro
+
+about:
+  home: https://github.com/nir0s/distro
+  license: Apache-2.0
+  license_file: LICENSE
+  summary: Linux Distribution - a Linux OS platform information API
+  doc_url: http://distro.readthedocs.io/en/latest/
+  dev_url: https://github.com/nir0s/distro
